@@ -26,7 +26,7 @@ class Enemy(Player):
         self.pos_vector = pygame.math.Vector2(self.rect.center)
         self.speed = 120  # can modify later
         self.step = 50
-        self.ATK = 78
+        self.ATK = 58
         self.roomNO = [0, 0]
 
     def update(self, dt):

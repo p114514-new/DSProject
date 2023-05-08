@@ -48,7 +48,7 @@ class Player(pygame.sprite.Sprite):
         self.direction_vector = pygame.math.Vector2(0, 0)
         self.pos_vector = pygame.math.Vector2(self.rect.center)
 
-        self.normal_speed = 500
+        self.normal_speed = 110
         self.reduced_speed = 90
         self.speed = self.normal_speed  # can modify later
         self.movepath = movepath
