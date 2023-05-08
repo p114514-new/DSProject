@@ -26,6 +26,7 @@ class Color:
     GREY = (128, 128, 128)  # 中性灰
     TRANSPARENT = (255, 255, 255, 0)  # 白色的完全透明
     Doder_blue = "#1E90FF"
+    light_grey = "#DCDCDC"
 
 
 class Text:

@@ -26,7 +26,7 @@ class Player(pygame.sprite.Sprite):
         self.handMagic = self.MagicList[1]
 
         # Status of player
-        self.HP = 100
+
 
         self.ATK = 100
 
@@ -48,7 +48,7 @@ class Player(pygame.sprite.Sprite):
         self.direction_vector = pygame.math.Vector2(0, 0)
         self.pos_vector = pygame.math.Vector2(self.rect.center)
 
-        self.normal_speed = 100
+        self.normal_speed = 500
         self.reduced_speed = 90
         self.speed = self.normal_speed  # can modify later
         self.movepath = movepath
@@ -113,13 +113,13 @@ class Player(pygame.sprite.Sprite):
 
     def take_damage(self, damage):
         if not self.invincible:
-            self.HP -= damage
+            Player.HP -= damage
             self.invincible = True
             self.last_hit_time = pygame.time.get_ticks()
 
     def take_damage(self, damage, fromWhich):
         if not self.invincible:
-            self.HP -= damage
+            Player.HP -= damage
             self.invincible = True
             ###mark for get damage
             self.getDMG = True
@@ -150,8 +150,7 @@ class Player(pygame.sprite.Sprite):
         self.MP += dt * 10
 
         if self.MP > 100: self.MP = 100
-        Player.HP = self.HP
-        Player.MP = self.MP
+
 
     def move(self, dt):  # needs to modify later
 
