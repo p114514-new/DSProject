@@ -2,11 +2,11 @@ import math
 
 import pygame
 from Interface_component import *
-from settings import *
 from support import *
 from Weapon import Weapon
 from Magic import *
 from mapeditor import myMap
+from settings import *
 
 from math import *
 
@@ -25,8 +25,9 @@ class Player(pygame.sprite.Sprite):
         self.MagicList = ["Circle", 'Shoot']
         self.handMagic = self.MagicList[1]
 
-        # Status of player
+        self.inventory = {'medicine': 0}
 
+        # Status of player
 
         self.ATK = 100
 
@@ -47,7 +48,6 @@ class Player(pygame.sprite.Sprite):
         # movement
         self.direction_vector = pygame.math.Vector2(0, 0)
         self.pos_vector = pygame.math.Vector2(self.rect.center)
-
         self.normal_speed = 110
         self.reduced_speed = 90
         self.speed = self.normal_speed  # can modify later
@@ -68,16 +68,16 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LSHIFT]:
             self.speed *= 2
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
             self.direction_vector.y = -1
-        elif keys[pygame.K_DOWN]:
+        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.direction_vector.y = 1
         else:
             self.direction_vector.y = 0
 
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.direction_vector.x = 1
-        elif keys[pygame.K_LEFT]:
+        elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.direction_vector.x = -1
         else:
             self.direction_vector.x = 0
@@ -110,6 +110,10 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_2]:
             self.doMagic()
+
+        # # drink medicine
+        # if keys[pygame.K_3]:
+        #     self.drinkMedicine()
 
     def take_damage(self, damage):
         if not self.invincible:
@@ -149,8 +153,8 @@ class Player(pygame.sprite.Sprite):
         self.magic_sprites.update(dt)
         self.MP += dt * 10
 
-        if self.MP > 100: self.MP = 100
-
+        if self.MP > 100:
+            self.MP = 100
 
     def move(self, dt):  # needs to modify later
 
@@ -172,7 +176,7 @@ class Player(pygame.sprite.Sprite):
 
         elif predicty < 0 or predicty >= GAME_SCREEN_HEIGHT - 1:
 
-            # print(self.direction_vector.x)
+            # (self.direction_vector.x)
 
             self.rect.y += self.direction_vector.y * self.speed * dt
             self.collision("vertical")
@@ -271,7 +275,7 @@ class Player(pygame.sprite.Sprite):
         if self.frame_index >= len(self.animations[self.status]):
             self.frame_index = 0
         self.image = self.animations[self.status][int(self.frame_index)]
-        if self.getDMG == True:
+        if self.getDMG:
             value = sin(pygame.time.get_ticks())
             if value >= 0:
                 value = 255
@@ -281,3 +285,21 @@ class Player(pygame.sprite.Sprite):
 
         else:
             self.image.set_alpha(255)
+
+    def drinkMedicine(self):
+        if self.inventory['medicine'] > 0:
+            self.inventory -= 1
+            self.HP = max(self.HP + 50, 100)
+            print(self.inventory)
+            print(self.HP)
+        else:
+            message = "You don't have any medicine."
+            font = pygame.font.Font(None, 36)
+            message_surface = font.render(message, True, (255, 0, 0))
+            message_rect = message_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+            screen = pygame.display.get_surface()
+            screen.blit(message_surface, message_rect)
+            pygame.display.update()
+            pygame.time.delay(2000)  # Wait for 2 seconds before clearing the message
+            screen.fill((0, 0, 0))  # Clear the message from the screen
+            pygame.display.update()

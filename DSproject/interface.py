@@ -80,8 +80,8 @@ class InterFace:
         ButtonColorSurface.number = 1
 
         while True:
-            print("HP")
-            print(Player.HP)
+            # print("HP")
+            # print(Player.HP)
             Image('bg3.jpg', 0.6).draw(screen, width / 2, height / 2)
             Image('achievement_icon.png', ratio=0.3).draw(screen, width * 0.93, height * 0.05)  # 成就按钮
 
@@ -137,7 +137,7 @@ class InterFace:
                 self.game_over_interface()
             else:
                 dt = self.clock.tick() / 1000
-                print(hit1_sound.get_volume())
+                # print(hit1_sound.get_volume())
                 self.level.run(dt)
                 Image('返回.png', ratio=0.38).draw(self.screen, SCREEN_WIDTH * 0.04, SCREEN_HEIGHT * 0.047)
                 button_back = ButtonColorSurface(Color.TRANSPARENT, 26, 26)
