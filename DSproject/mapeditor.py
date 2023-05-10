@@ -89,7 +89,7 @@ class myMap:
         movepath = [[1 for _ in range(0, GAME_SCREEN_WIDTH)] for _ in range(0, GAME_SCREEN_HEIGHT)]
         for i in range(0, self.RoomRow):
             for j in range(0, self.RoomCol):
-                if room[i][j] != 1:
+                if room[i][j] == 0:
                     for k in range(max(i * self.roomyl - 32, 0),
                                    min((i + 1) * self.roomyl + 32, GAME_SCREEN_HEIGHT - 1)):
                         for p in range(max(j * self.roomxl - 32, 0), min((j + 1) * self.roomxl + 32,

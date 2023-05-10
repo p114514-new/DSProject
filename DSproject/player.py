@@ -7,7 +7,7 @@ from Weapon import Weapon
 from Magic import *
 from mapeditor import myMap
 from settings import *
-
+from message import Message
 from math import *
 
 
@@ -63,6 +63,13 @@ class Player(pygame.sprite.Sprite):
         self.getPushDir = pygame.math.Vector2(0, 0)
         self.last_hit_time = 0
 
+        self.already_drunk_medicine = False
+        self.last_drunk_medicine_time = 0
+
+        self.message_sprite = pygame.sprite.Group()
+        self.last_notice_time = 0
+        self.noticing = False
+
     def input(self):
 
         keys = pygame.key.get_pressed()
@@ -111,9 +118,9 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_2]:
             self.doMagic()
 
-        # # drink medicine
-        # if keys[pygame.K_3]:
-        #     self.drinkMedicine()
+        # drink medicine
+        if keys[pygame.K_3]:
+            self.drinkMedicine()
 
     def take_damage(self, damage):
         if not self.invincible:
@@ -144,6 +151,8 @@ class Player(pygame.sprite.Sprite):
         self.animate(dt)
         self.stepontrap()
         self.invincibility()
+        self.display_message()
+        self.medicine_helper()
 
         if not self.weapon_sprites.empty():
             for sp in self.weapon_sprites:
@@ -287,19 +296,28 @@ class Player(pygame.sprite.Sprite):
             self.image.set_alpha(255)
 
     def drinkMedicine(self):
+        if self.already_drunk_medicine:
+            return
+        print(self.inventory)
+        print('HP: ', self.HP)
         if self.inventory['medicine'] > 0:
-            self.inventory -= 1
-            self.HP = max(self.HP + 50, 100)
-            print(self.inventory)
-            print(self.HP)
+            self.inventory['medicine'] -= 1
+            Player.HP = min(Player.HP + 50, 100)
+            self.noticing = False
+            self.already_drunk_medicine = True
+            self.last_drunk_medicine_time = pygame.time.get_ticks()
         else:
-            message = "You don't have any medicine."
-            font = pygame.font.Font(None, 36)
-            message_surface = font.render(message, True, (255, 0, 0))
-            message_rect = message_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
-            screen = pygame.display.get_surface()
-            screen.blit(message_surface, message_rect)
-            pygame.display.update()
-            pygame.time.delay(2000)  # Wait for 2 seconds before clearing the message
-            screen.fill((0, 0, 0))  # Clear the message from the screen
-            pygame.display.update()
+            self.noticing = True
+            self.last_notice_time = pygame.time.get_ticks()
+
+    def display_message(self):
+        message = Message("You don't have any medicine.", self.message_sprite)
+
+        if self.noticing:
+            self.message_sprite.draw(self.display_surface)
+        if pygame.time.get_ticks() - self.last_notice_time > 1000:
+            self.noticing = False
+
+    def medicine_helper(self):
+        if pygame.time.get_ticks() - self.last_drunk_medicine_time > 500:
+            self.already_drunk_medicine = False

@@ -91,7 +91,7 @@ class Level:
                 # delete medicine
                 medicine_sprite.kill()
                 print(self.player.inventory)
-                print(self.player.HP)
+                print('HP: ', self.player.HP)
                 break
 
     def shiftRoom(self):
@@ -130,7 +130,6 @@ class Level:
                 self.isShift = 1
             else:
                 self.player.rect.y = GAME_SCREEN_HEIGHT
-        settings.current_room = self.curRoom
 
     def setup(self):
         movepath = self.map.getMoveArea()

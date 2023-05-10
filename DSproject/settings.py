@@ -6,5 +6,3 @@ SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 700
 JTGAME = False
 yinxiao = 0.5
-
-current_room = (0,0)
