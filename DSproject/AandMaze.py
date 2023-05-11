@@ -102,7 +102,7 @@ def generate_maze(width, height, wall_density):
     # Ensure that there is a solution from (0, 0) to (width - 1,height - 1)
     maze[height - 1][width - 1] = 1
 
-    trapcnt = 0_
+    trapcnt = 0
     trapnum = width * height * wall_density * wall_density
     while trapcnt < trapnum:
         x = random.randint()
