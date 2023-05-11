@@ -2,8 +2,9 @@ import pygame
 from player import Player
 from settings import *
 import random
+import AandMaze
 from math import *
-
+from mapeditor import myMap
 from support import import_folder
 
 
@@ -91,3 +92,11 @@ class Enemy(Player):
         for animation in self.animations.keys():
             full_path = r'./enemy/' + animation
             self.animations[animation] = import_folder(full_path)
+
+    def chase(self):
+        while(True):
+            steps = AandMaze.A(myMap.mazelist, self.rect.x, self.rect.y, self.playerpos.x, self.playerpos.y)
+            size = steps.size()
+            for i in range(0, size):
+                self.rect += steps[i]
+
