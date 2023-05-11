@@ -107,7 +107,7 @@ def generate_maze(width, height, wall_density):
     while trapcnt < trapnum:
         x = random.randint()
         y = random.randint()
-        if(maze[x][y] == 1):
+        if maze[x][y] == 1 :
             maze[x][y] = 8
             trapcnt += 1
 
