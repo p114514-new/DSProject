@@ -9,7 +9,7 @@ from support import import_folder
 
 
 class Enemy(Player):
-    def __init__(self, pos, playerpos, movepath, group, obscatle_sprite, trap_sprite):
+    def __init__(self, pos, playerpos, movepath, group, obscatle_sprite, trap_sprite, map):
 
         super(Enemy, self).__init__(pos, movepath, group, obscatle_sprite, trap_sprite)
         # import assets and surface setup
@@ -29,6 +29,8 @@ class Enemy(Player):
         self.step = 50
         self.ATK = 58
         self.roomNO = [0, 0]
+
+        self.map = map
 
     def update(self, dt):
         self.randMove(dt)
@@ -95,7 +97,7 @@ class Enemy(Player):
 
     def chase(self):
         while(True):
-            steps = AandMaze.A(myMap.mazelist, self.rect.x, self.rect.y, self.playerpos.x, self.playerpos.y)
+            steps = AandMaze.A(self.map.mazeMatrix, self.rect.x, self.rect.y, self.playerpos.x, self.playerpos.y)
             size = steps.size()
             for i in range(0, size):
                 self.rect += steps[i]

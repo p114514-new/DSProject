@@ -148,7 +148,8 @@ class Level:
             roomNO = [random.randint(0, self.RR - 1), random.randint(0, self.RC - 1)]
             pos = self.map.getRoomBirthPos(roomNO)
             globals()['self.enemy' + str(i)] = Enemy(pos, self.player.getpos(), movepath,
-                                                     self.enemy_sprites, self.map.getBlock(), self.map.getTrap())
+                                                     self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
+                                                     self.map)
             globals()['self.enemy' + str(i)].roomNO = roomNO
         for i in range(0, m):
             roomNO = [random.randint(0, self.RR - 1), random.randint(0, self.RC - 1)]
