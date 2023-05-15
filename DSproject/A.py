@@ -16,9 +16,12 @@ def h2(i, j, endx, endy):
     return pow(i - endx, 2) + pow(j - endy, 2)
 
 
-def Astar(b, startx, starty, endx, endy):  # 下标从0起算
+
+def Astar(b, starty, startx, endy, endx):  # 下标从0起算
     startx += 1
     starty += 1
+    endy=int(endy)
+    endx=int(endx)
     endx += 1
     endy += 1
     a = 1 - b
@@ -29,13 +32,15 @@ def Astar(b, startx, starty, endx, endy):  # 下标从0起算
             if a[i][j] != 0 and a[i][j] != 1:
                 a[i][j] = 0
     if a[startx - 1, starty - 1] == 1:
-        return -1
+        return []
     else:
         Close = [[startx, starty]]
         Opens = [[startx, starty]]
         crossings = []
         road = 100
         rows, cols = a.shape
+
+
         while True:
             if Close[-1] != [endx, endy]:
                 Open = []
@@ -61,8 +66,12 @@ def Astar(b, startx, starty, endx, endy):  # 下标从0起算
                 else:
                     break
             else:
+
+                print(endx-1,endy-1,'ok')
                 a[endx - 1, endy - 1] = road
                 break
+
+
 
         directionlist = [[0, 1], [0, -1], [1, 0], [-1, 0], [-1, -1], [-1, 1], [1, -1], [1, 1]]
         l = len(Close)
@@ -92,9 +101,12 @@ def Astar(b, startx, starty, endx, endy):  # 下标从0起算
 
 def getDirection(Close):
     size = len(Close)
-    if size > 10:
-        size = 10
+
+    stepsize=100
+    if size > stepsize:
+        size = stepsize
     ans1 = np.array(Close[0:size - 1])
     ans2 = np.array(Close[1:size])
     ans = ans2 - ans1
-    return ans
+    return ans.tolist()
+

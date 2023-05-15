@@ -8,7 +8,9 @@ from enemy import Enemy
 from mapeditor import myMap
 from medicine import Medicine
 
-n = 10  # number of enemies
+
+n = 20  # number of enemies
+
 m = 5  # number of medicine
 
 
