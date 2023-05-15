@@ -88,9 +88,11 @@ class myMap:
                             self.MoveArea[k][p] = 0
 
 
+
     def getRoomBirthPos(self, RoomNO):
         room = self.toRoom(self.mazeMatrix, RoomNO[1],RoomNO[0])
         movepath = self.MoveArea
+
         for i in range(0, self.RoomRow):
             for j in range(0, self.RoomCol):
                 if room[i][j] == 0:
@@ -98,6 +100,7 @@ class myMap:
                                    min((i + 1) * self.roomyl + 32, GAME_SCREEN_HEIGHT - 1)):
                         for p in range(max(j * self.roomxl - 32, 0), min((j + 1) * self.roomxl + 32,
                                                                          GAME_SCREEN_WIDTH - 1)):
+
                              movepath[k][p] = 0
 
 

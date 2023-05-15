@@ -261,6 +261,7 @@ class PrimMaze:
 
         return door[0], door[1], door[2], key[0][-1], key[1][-1], key[2][-1]
 
+
 # # m = PrimMaze()
 # # a = m.displaymaze()
 # #
@@ -286,3 +287,4 @@ class PrimMaze:
 # # print(k2)
 # # print(d3, end=' ')
 # # print(k3)
+

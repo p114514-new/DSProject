@@ -30,6 +30,7 @@ class Enemy(Player):
         self.ATK = 58
         self.roomNO = [0, 0]
 
+
         self.map = mapp
         self.chasemap=np.array(self.map.toRoom(self.map.mazeMatrix, self.roomNO[1], self.roomNO[0]))
         self.cellx=self.map.roomxl
@@ -47,7 +48,9 @@ class Enemy(Player):
         if (self.pos_vector - self.playerpos).magnitude() < 350:
             direction = self.chase()
             for x in range(3):
+
                 self.direction_vector =pygame.math.Vector2(direction[x][0],direction[x][1])
+
                 self.move(dt)
         else:
             left_unit_vector = pygame.math.Vector2(-1, 0)
@@ -90,10 +93,12 @@ class Enemy(Player):
             self.animations[animation] = import_folder(full_path)
 
     def chase(self):
+
         steps = A.Astar(self.chasemap, (self.rect.x//self.cellx), self.rect.y//self.celly-1, self.playerpos.x//self.cellx-1, self.playerpos.y//self.celly-1)
         directions = A.getDirection(steps)
         print(directions)
         size = len(directions)
+
         if size < 3:
             directions.extend([[0, 0]] * (4 - size))
         return directions[:3]
