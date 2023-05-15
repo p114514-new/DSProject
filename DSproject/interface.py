@@ -100,9 +100,9 @@ class InterFace:
             hover_image = Image('ink.png', ratio=0.35)
             hover_image.set_alpha(100)
 
-            if (start_hover):
+            if start_hover:
                 hover_image.draw(screen, width / 2, height * 0.55)
-            if (option_hover):
+            if option_hover:
                 hover_image.draw(screen, width / 2, height * 0.65)
 
             for event in pygame.event.get():
@@ -133,7 +133,7 @@ class InterFace:
                     button_back.handle_event(self.start_interface)
                     button_setting.handle_event(self.option_interface)
 
-            if Player.HP <= 0:
+            if self.level.player.HP <= 0:
                 self.game_over_interface()
             else:
                 dt = self.clock.tick() / 1000
@@ -161,7 +161,7 @@ class InterFace:
 
         outline_rect = pygame.Rect(left, top, width, height)
         pygame.draw.rect(self.screen, Color.WHITE, outline_rect, 1)
-        life_rect = pygame.Rect(left + 1, top + 1, Player.HP / 100.0 * width, height * 0.93)
+        life_rect = pygame.Rect(left + 1, top + 1, self.level.player.HP / 100.0 * width, height * 0.93)
         pygame.draw.rect(self.screen, Color.RED, life_rect)
         Text('HP', Color.RED, 'xxyl.ttf', 38).draw(self.screen, SCREEN_WIDTH * 0.04, SCREEN_HEIGHT * 0.92)
 
@@ -173,7 +173,7 @@ class InterFace:
 
         outline_rect = pygame.Rect(left, top, width, height)
         pygame.draw.rect(self.screen, Color.WHITE, outline_rect, 1)
-        life_rect = pygame.Rect(left + 1, top + 1, Player.MP / 100.0 * width, height * 0.93)
+        life_rect = pygame.Rect(left + 1, top + 1, self.level.player.MP / 100.0 * width, height * 0.93)
         pygame.draw.rect(self.screen, Color.Doder_blue, life_rect)
         Text('MP', Color.Doder_blue, 'xxyl.ttf', 38).draw(self.screen, SCREEN_WIDTH * 0.41, SCREEN_HEIGHT * 0.92)
 
@@ -318,7 +318,7 @@ class InterFace:
 
             OK_hover = button_OK.rect.collidepoint(pygame.mouse.get_pos())
 
-            if (OK_hover):
+            if OK_hover:
                 hover_image.draw(self.screen, width / 2, height * 0.55)
 
             outline_rect = pygame.Rect(340, 360, 220, 50)

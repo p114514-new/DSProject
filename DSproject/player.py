@@ -12,8 +12,6 @@ from math import *
 
 
 class Player(pygame.sprite.Sprite):
-    HP = 100
-    MP = 100
 
     def __init__(self, pos, movepath, group, obstacle_sprite, trap_sprite):
         super().__init__(group)
@@ -32,6 +30,7 @@ class Player(pygame.sprite.Sprite):
         self.ATK = 100
 
         self.DEF = 50
+        self.HP = 100
         self.MP = 100
 
         # sprite image initialization
@@ -124,13 +123,13 @@ class Player(pygame.sprite.Sprite):
 
     def take_damage(self, damage):
         if not self.invincible:
-            Player.HP -= damage
+            self.HP -= damage
             self.invincible = True
             self.last_hit_time = pygame.time.get_ticks()
 
     def take_damage(self, damage, fromWhich):
         if not self.invincible:
-            Player.HP -= damage
+            self.HP -= damage
             self.invincible = True
             ###mark for get damage
             self.getDMG = True

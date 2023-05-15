@@ -2,14 +2,14 @@ import pygame
 from player import Player
 from settings import *
 import random
-import AandMaze
+import A
 from math import *
 from mapeditor import myMap
 from support import import_folder
 
 
 class Enemy(Player):
-    def __init__(self, pos, playerpos, movepath, group, obscatle_sprite, trap_sprite, map):
+    def __init__(self, pos, playerpos, movepath, group, obscatle_sprite, trap_sprite, mapp):
 
         super(Enemy, self).__init__(pos, movepath, group, obscatle_sprite, trap_sprite)
         # import assets and surface setup
@@ -30,30 +30,21 @@ class Enemy(Player):
         self.ATK = 58
         self.roomNO = [0, 0]
 
-        self.map = map
+        self.map = mapp
 
     def update(self, dt):
-        self.randMove(dt)
+        self.Move(dt)
         self.animate(dt)
         self.invincibility()
 
     def setPlayerPos(self, playerpos):
         self.playerpos = playerpos
 
-    def randMove(self, dt):  # needs to modify later
-        # if self.Astep>0 and (self.pos_vector-self.playerpos).magnitude()<100:
-        #     self.direction_vector=self.dir_list[self.temp-self.Astep]
-        #     self.move(dt)
-        #     self.Astep-=1
-        # else:
-        #     self.dir_list=A(self.playerpos).copy
-        #     self.Astep=len(self.dir_list)
-        #     self.temp=len(self.dir_list)
-
-        if (self.pos_vector - self.playerpos).magnitude() < 500:
-            if (self.playerpos - self.pos_vector) != pygame.math.Vector2(0, 0):
-                self.direction_vector = (self.playerpos - self.pos_vector).normalize()
-                # print(self.direction_vector)
+    def Move(self, dt):  # needs to modify later
+        if (self.pos_vector - self.playerpos).magnitude() < 350:
+            direction = self.chase()
+            for x in range(3):
+                self.direction_vector = direction[x]
                 self.move(dt)
         else:
             left_unit_vector = pygame.math.Vector2(-1, 0)
@@ -96,9 +87,9 @@ class Enemy(Player):
             self.animations[animation] = import_folder(full_path)
 
     def chase(self):
-        while(True):
-            steps = AandMaze.A(self.map.mazeMatrix, self.rect.x, self.rect.y, self.playerpos.x, self.playerpos.y)
-            size = steps.size()
-            for i in range(0, size):
-                self.rect += steps[i]
-
+        steps = A.Astar(self.map.mazeMatrix, self.rect.x, self.rect.y, self.playerpos.x, self.playerpos.y)
+        directions = A.getDirection(steps)
+        size = directions.size()
+        if size < 3:
+            directions.extend([[0, 0]] * (4 - size))
+        return directions[:3]
