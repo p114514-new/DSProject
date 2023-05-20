@@ -121,11 +121,11 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_3]:
             self.drinkMedicine()
 
-    def take_damage(self, damage):
-        if not self.invincible:
-            self.HP -= damage
-            self.invincible = True
-            self.last_hit_time = pygame.time.get_ticks()
+    # def take_damage(self, damage):
+    #     if not self.invincible:
+    #         self.HP -= damage
+    #         self.invincible = True
+    #         self.last_hit_time = pygame.time.get_ticks()
 
     def take_damage(self, damage, fromWhich):
         if not self.invincible:
@@ -301,7 +301,7 @@ class Player(pygame.sprite.Sprite):
         print('HP: ', self.HP)
         if self.inventory['medicine'] > 0:
             self.inventory['medicine'] -= 1
-            Player.HP = min(Player.HP + 50, 100)
+            self.HP = min(self.HP + 50, 100)
             self.noticing = False
             self.already_drunk_medicine = True
             self.last_drunk_medicine_time = pygame.time.get_ticks()

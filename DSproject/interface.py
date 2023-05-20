@@ -147,6 +147,14 @@ class InterFace:
                 button_setting = ButtonColorSurface(Color.TRANSPARENT, 26, 26)
                 button_setting.draw(self.screen, SCREEN_WIDTH * 0.09, SCREEN_HEIGHT * 0.048)
 
+                self.screen.blit(pygame.image.load(r'.\medicine\134.png'), (SCREEN_WIDTH * 0.72, SCREEN_HEIGHT * 0.9))
+                num_surface = pygame.Surface((16, 16))
+                num_surface.fill((0, 0, 0))
+                font = pygame.font.SysFont(None, 24)
+                text = font.render(str(self.level.player.inventory['medicine']), True, (255, 255, 255))
+                num_surface.blit(text, (0, 0))
+                self.screen.blit(num_surface, (SCREEN_WIDTH * 0.75, SCREEN_HEIGHT * 0.9))
+
                 button_game_over = ButtonText('', Color.BLACK, 'aajht.ttf', 50)  # 开始游戏按钮
                 self.lifebar_draw()
                 self.magic_draw()
