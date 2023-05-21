@@ -262,29 +262,29 @@ class PrimMaze:
         return door[0], door[1], door[2], key[0][-1], key[1][-1], key[2][-1]
 
 
-# # m = PrimMaze()
-# # a = m.displaymaze()
-# #
-# # #a = 1 - (a % 2)
-# #
-# # for row in a:
-# #     print(row)
-# #
-# # print('\n')
-# #
-# # p = A.Astar(a, 0, 0, 19, 19)
-# #
-# # print(p)
-# #
-# # b = m.addtrap(0.5)
-# # for row in b:
-# #     print(row)
-# #
-# # d1, d2, d3, k1, k2, k3 = m.adddoors(b)
-# # print(d1, end=' ')
-# # print(k1)
-# # print(d2, end=' ')
-# # print(k2)
-# # print(d3, end=' ')
-# # print(k3)
+# m = PrimMaze()
+# a = m.displaymaze()
+#
+# #a = 1 - (a % 2)
+#
+# for row in a:
+#     print(row)
+#
+# print('\n')
+#
+# p = A.Astar(a, 0, 0, 19, 19)
+#
+# print(p)
+#
+# b = m.addtrap(0.5)
+# for row in b:
+#     print(row)
+#
+# d1, d2, d3, k1, k2, k3 = m.adddoors(b)
+# print(d1, end=' ')
+# print(k1)
+# print(d2, end=' ')
+# print(k2)
+# print(d3, end=' ')
+# print(k3)
 

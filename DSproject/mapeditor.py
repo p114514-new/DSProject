@@ -12,10 +12,10 @@ class myMap:
     def __init__(self, screen, all_sprites):
         super().__init__()
         # modify maz
-        m = PrimMaze()
-        self.Matrix = m.displaymaze()
-        self.mazeMatrix = m.addtrap(0.6)
-        self.door1, self.door2, self.door3, self.key1, self.key2, self.key3 = m.adddoors(self.mazeMatrix)
+        self.maze = PrimMaze()
+        self.Matrix = self.maze.displaymaze()
+        self.mazeMatrix = self.maze.addtrap(0.6)
+        self.gate1, self.gate2, self.gate3, self.key1, self.key2, self.key3 = self.maze.adddoors(self.mazeMatrix)
         # self.mazeMatrix = [[1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1],
         #              [1, 0, 1, 8, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 8, 0, 1],
         #              [1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1],
@@ -49,14 +49,8 @@ class myMap:
         # define para
         self.screen = screen
 
-        self.xl = GAME_SCREEN_WIDTH // self.mazecol
-        self.yl = GAME_SCREEN_HEIGHT // self.mazerow
-
         self.roomxl = GAME_SCREEN_WIDTH // self.RoomCol
         self.roomyl = GAME_SCREEN_HEIGHT // self.RoomRow
-
-        self.cell_row = range(0, GAME_SCREEN_HEIGHT, self.yl)
-        self.cell_col = range(0, GAME_SCREEN_WIDTH, self.xl)
 
         self.all_sprites = all_sprites
         self.block = Block(self.all_sprites)
@@ -87,10 +81,8 @@ class myMap:
                                                                          GAME_SCREEN_WIDTH - 1)):
                             self.MoveArea[k][p] = 0
 
-
-
     def getRoomBirthPos(self, RoomNO):
-        room = self.toRoom(self.mazeMatrix, RoomNO[1],RoomNO[0])
+        room = self.toRoom(self.mazeMatrix, RoomNO[1], RoomNO[0])
         movepath = self.MoveArea
 
         for i in range(0, self.RoomRow):
@@ -100,9 +92,7 @@ class myMap:
                                    min((i + 1) * self.roomyl + 32, GAME_SCREEN_HEIGHT - 1)):
                         for p in range(max(j * self.roomxl - 32, 0), min((j + 1) * self.roomxl + 32,
                                                                          GAME_SCREEN_WIDTH - 1)):
-
-                             movepath[k][p] = 0
-
+                            movepath[k][p] = 0
 
         birthPos = []
         err = 30
@@ -182,12 +172,6 @@ class myMap:
 
     def getmazecol(self):
         return self.mazecol
-
-    def getcell_col(self):
-        return self.cell_col
-
-    def getcell_row(self):
-        return self.cell_row
 
     def MazeGenerator(self):
         return self.mazeMatrix

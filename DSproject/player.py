@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.MagicList = ["Circle", 'Shoot']
         self.handMagic = self.MagicList[1]
 
-        self.inventory = {'medicine': 0}
+        self.inventory = {'medicine': 0, 'keys': 0}
 
         # Status of player
 
@@ -68,6 +68,12 @@ class Player(pygame.sprite.Sprite):
         self.message_sprite = pygame.sprite.Group()
         self.last_notice_time = 0
         self.noticing = False
+
+    def add_obstacle(self, sprite):
+        self.obstacle.add(sprite)
+
+    def kill_obstacle(self, sprite):
+        self.obstacle.remove(sprite)
 
     def input(self):
 
