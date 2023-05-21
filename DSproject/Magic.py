@@ -16,7 +16,7 @@ class Magic(pygame.sprite.Sprite):
 
     def setMagic(self, status, pos, enemy, oracle):
         self.status = status
-        self.image = pygame.image.load(self.pics[self.status])
+        self.image = pygame.transform.scale(pygame.image.load(self.pics[self.status]).convert_alpha(), (12, 12))
         self.rect = self.image.get_rect(topleft=pos)
         self.enemy_sprites = enemy
         self.oracle_sprites = oracle

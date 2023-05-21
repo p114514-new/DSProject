@@ -95,6 +95,8 @@ class Level:
             self.all_block_sprites.empty()
             for sp in self.map.getBlock():
                 self.all_block_sprites.add(sp)
+            for sp in self.player.magic_sprites:
+                sp.kill()
             self.isShift = 0
 
         # map‘s level is above the sprite

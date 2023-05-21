@@ -3,15 +3,14 @@ from player import Player
 from settings import *
 import random
 import A
-from math import *
-from mapeditor import myMap
 from support import import_folder
 import numpy as np
 
-class Enemy(Player):
-    def __init__(self, pos, playerpos, movepath, group, obscatle_sprite, trap_sprite, mapp):
 
-        super(Enemy, self).__init__(pos, movepath, group, obscatle_sprite, trap_sprite)
+class Enemy(Player):
+    def __init__(self, pos, playerpos, movepath, group, obstacle_sprite, trap_sprite, mapp):
+
+        super(Enemy, self).__init__(pos, movepath, group, obstacle_sprite, trap_sprite)
         # import assets and surface setup
         self.import_assets()
         self.status = 'right'
@@ -31,35 +30,37 @@ class Enemy(Player):
         self.roomNO = [0, 0]
 
         self.map = mapp
-        self.chasemap=np.array(self.map.toRoom(self.map.mazeMatrix, self.roomNO[1], self.roomNO[0]))
-        self.cellx=self.map.roomxl
-        self.celly=self.map.roomyl
-        self.chasedis=self.map.roomxl*1.1
-        self.chasestep=0
+        self.chasemap = np.array(self.map.toRoom(self.map.mazeMatrix, self.roomNO[1], self.roomNO[0]))
+        self.cellx = self.map.roomxl
+        self.celly = self.map.roomyl
+        self.chasedis = self.map.roomxl * 1.1
+        self.chasestep = 0
+
     def update(self, dt):
         self.Move(dt)
         self.animate(dt)
         self.invincibility()
-        self.chasestep=0
+        self.chasestep = 0
 
     def setPlayerPos(self, playerpos):
         self.playerpos = playerpos
 
     def Move(self, dt):  # needs to modify later
-        if (self.pos_vector - self.playerpos).magnitude() < 350 and (self.pos_vector - self.playerpos).magnitude() > 150 :
+        if (self.pos_vector - self.playerpos).magnitude() < 350 and (
+                self.pos_vector - self.playerpos).magnitude() > 150:
 
             direction = self.chase()
-            MaxStep=len(direction)-1
-            if self.chasestep>=MaxStep:
-                self.chasestep=MaxStep
-            print(self.chasestep,len(direction),'ok')
-            if MaxStep>0:
-             self.direction_vector = pygame.math.Vector2(direction[self.chasestep][1], direction[self.chasestep][0])
-             self.move(dt)
-             self.chasedis -= self.speed * dt
-            if self.chasedis<=0:
-                self.chasestep+=1
-                self.chasedis=self.map.roomxl*1.1
+            MaxStep = len(direction) - 1
+            if self.chasestep >= MaxStep:
+                self.chasestep = MaxStep
+            print(self.chasestep, len(direction), 'ok')
+            if MaxStep > 0:
+                self.direction_vector = pygame.math.Vector2(direction[self.chasestep][1], direction[self.chasestep][0])
+                self.move(dt)
+                self.chasedis -= self.speed * dt
+            if self.chasedis <= 0:
+                self.chasestep += 1
+                self.chasedis = self.map.roomxl * 1.1
         if (self.pos_vector - self.playerpos).magnitude() <= 50:
             self.direction_vector = -(self.pos_vector - self.playerpos)
             self.move(dt)
@@ -105,7 +106,8 @@ class Enemy(Player):
 
     def chase(self):
         # print( (self.rect.x//self.cellx), self.rect.y//self.celly, self.playerpos.x//self.cellx, self.playerpos.y//self.celly)
-        steps = A.Astar(self.chasemap,(self.rect.x//self.cellx), (self.rect.y//self.celly),( self.playerpos.x//self.cellx),( self.playerpos.y//self.celly))
+        steps = A.Astar(self.chasemap, (self.rect.x // self.cellx), (self.rect.y // self.celly),
+                        (self.playerpos.x // self.cellx), (self.playerpos.y // self.celly))
         directions = A.getDirection(steps)
         # print(directions)
         size = len(directions)
