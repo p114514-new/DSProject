@@ -5,6 +5,7 @@ import settings
 from settings import *
 from player import Player
 from enemy import Enemy
+from boss import Boss
 from mapeditor import myMap
 from medicine import Medicine
 from key import Key
@@ -213,6 +214,14 @@ class Level:
                                                      self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
                                                      self.map)
             globals()['self.enemy' + str(i)].roomNO = roomNO
+
+        bossroomNO = [random.randint(3, self.RR - 1), random.randint(3, self.RC - 1)]
+        bosspos = self.map.getRoomBirthPos(bossroomNO)
+        globals()['self.boss' + str(i)] = Boss(bosspos, self.player.getpos(), movepath,
+                                                 self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
+                                                 self.map)
+        globals()['self.boss' + str(i)].roomNO = bossroomNO
+
         for i in range(0, m):
             roomNO = [random.randint(0, self.RR - 1), random.randint(0, self.RC - 1)]
             pos = self.map.getRoomBirthPos(roomNO)

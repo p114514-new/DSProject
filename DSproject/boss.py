@@ -1,5 +1,6 @@
 import pygame
 from enemy import Enemy
+from support import import_folder
 
 
 class Boss(Enemy):
@@ -12,4 +13,8 @@ class Boss(Enemy):
         self.DEF = 60
 
     def import_assets(self):
-        pass
+        self.animations = {'right': [], 'left': [], 'back': [], 'right_idle': [], 'left_idle': [], 'back_idle': []}
+        for animation in self.animations.keys():
+            full_path = r'./boss'
+            for image in import_folder(full_path):
+                self.animations[animation].append(pygame.transform.scale(image, (42, 42)))
