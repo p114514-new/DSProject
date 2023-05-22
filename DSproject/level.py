@@ -215,8 +215,8 @@ class Level:
                                                      self.map)
             globals()['self.enemy' + str(i)].roomNO = roomNO
 
-        bossroomNO = [random.randint(3, self.RR - 1), random.randint(3, self.RC - 1)]
-        bosspos = self.map.getRoomBirthPos(bossroomNO)
+        bossroomNO = [self.map.monster[1] // 4, self.map.monster[0] // 4]
+        bosspos = [(self.map.monster[1] % 4 + 1.5) * self.map.roomxl, (self.map.monster[0] % 4 + 1.5) * self.map.roomyl]
         globals()['self.boss' + str(i)] = Boss(bosspos, self.player.getpos(), movepath,
                                                  self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
                                                  self.map)

@@ -96,13 +96,21 @@ def Astar(b, starty, startx, endy, endx):  # 下标从0起算
                 ans.remove([0, 1])
             else:
                 ans.remove([1, 0])
+
+        ll = len(ans)
+        for i in range(0, ll - 5):
+            if ((np.array(ans[i + 2]) - np.array(ans[i])).tolist()) in [[0, 2], [0, -2], [2, 0], [-2, 0]]:
+                r = np.array((np.array(ans[i + 2]) + np.array(ans[i])) / 2, dtype=int)
+                re = r.tolist()
+                if a[re[0]][re[1]] == 1:
+                    ans[i + 1] = re
         return ans
 
 
 def getDirection(Close):
     size = len(Close)
 
-    stepsize=100
+    stepsize = 100
     if size > stepsize:
         size = stepsize
     ans1 = np.array(Close[0:size - 1])

@@ -15,7 +15,8 @@ class myMap:
         self.maze = PrimMaze()
         self.Matrix = self.maze.displaymaze()
         self.mazeMatrix = self.maze.addtrap(0.6)
-        self.gate1, self.gate2, self.gate3, self.key1, self.key2, self.key3 = self.maze.adddoors(self.mazeMatrix)
+        self.gate1, self.gate2, self.gate3, self.key1, self.key2, self.key3, self.monster = self.maze.adddoors(
+            self.mazeMatrix)
         # self.mazeMatrix = [[1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1],
         #              [1, 0, 1, 8, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 8, 0, 1],
         #              [1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1],
