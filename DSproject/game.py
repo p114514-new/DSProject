@@ -14,7 +14,10 @@ class Game:
         self.clock = pygame.time.Clock()
         self.level = Level()
 
+
     def run(self):
+        FPS = 60
+        FPSClock = pygame.time.Clock()
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -26,3 +29,5 @@ class Game:
             self.level.run(dt)
 
             pygame.display.update()
+
+            FPSClock.tick(FPS)

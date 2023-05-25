@@ -225,9 +225,9 @@ class PrimMaze:
         if [0, 0] in predoor:
             predoor.remove([0, 0])
         # print(predoor)
-        d1 = int(l / 4 - 1)
+        d1 = int(l / 4 + 1)
         d2 = int(l / 2)
-        d3 = int(l * 3 / 4 + 1)
+        d3 = int(l * 3 / 4)
         door.append(predoor[d1])
         door.append(predoor[d2])
         door.append(predoor[d3])
@@ -255,34 +255,39 @@ class PrimMaze:
             door[1] = predoor[random.randint(d2, d3 - 1)]
 
         if door[2] == key[2][-1]:
-            door[2] = predoor[random.randint(d3 + 1, l - 2)]
+            door[2] = predoor[random.randint(d3 + 1, l - 3)]
         else:
-            door[2] = predoor[random.randint(d3, l - 2)]
+            door[2] = predoor[random.randint(d3, l - 3)]
 
-        return door[0], door[1], door[2], key[0][-1], key[1][-1], key[2][-1]
+        m = predoor.index(door[2])
+        monster = predoor[random.randint(m, l - 2)]
+        return door[0], door[1], door[2], key[0][-1], key[1][-1], key[2][-1], monster
 
-# # m = PrimMaze()
-# # a = m.displaymaze()
-# #
-# # #a = 1 - (a % 2)
-# #
-# # for row in a:
-# #     print(row)
-# #
-# # print('\n')
-# #
-# # p = A.Astar(a, 0, 0, 19, 19)
-# #
-# # print(p)
-# #
-# # b = m.addtrap(0.5)
-# # for row in b:
-# #     print(row)
-# #
-# # d1, d2, d3, k1, k2, k3 = m.adddoors(b)
-# # print(d1, end=' ')
-# # print(k1)
-# # print(d2, end=' ')
-# # print(k2)
-# # print(d3, end=' ')
-# # print(k3)
+
+# m = PrimMaze()
+# a = m.displaymaze()
+#
+#
+#
+# for row in a:
+#     print(row)
+#
+# print('\n')
+#
+# p = A.Astar(a, 0, 0, 19, 19)
+#
+# print(p)
+#
+# b = m.addtrap(0.6)
+# for row in b:
+#     print(row)
+#
+# d1, d2, d3, k1, k2, k3, m = m.adddoors(b)
+# print(d1, end=' ')
+# print(k1)
+# print(d2, end=' ')
+# print(k2)
+# print(d3, end=' ')
+# print(k3)
+# print(m)
+
