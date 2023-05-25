@@ -8,10 +8,13 @@ import numpy as np
 from Interface_component import *
 from sound import *
 
+
 class Enemy(Player):
+
     def __init__(self, pos, playerpos, movepath, group, obstacle_sprite, trap_sprite, mapp,sur):
 
         super(Enemy, self).__init__(pos, movepath, group, obstacle_sprite, trap_sprite,sur)
+
         # import assets and surface setup
         self.import_assets()
         self.status = 'right'
@@ -42,7 +45,9 @@ class Enemy(Player):
         self.animate(dt)
         self.invincibility()
         self.chasestep = 0
+
         self.Enemy_lifebar_draw()
+
     def setPlayerPos(self, playerpos):
         self.playerpos = playerpos
 
