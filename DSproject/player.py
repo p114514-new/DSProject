@@ -13,9 +13,9 @@ from math import *
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, pos, movepath, group, obstacle_sprite, trap_sprite):
+    def __init__(self, pos, movepath, group, obstacle_sprite, trap_sprite,sur):
         super().__init__(group)
-
+        self.display_surface=sur
         self.weapon_sprites = pygame.sprite.Group()
         self.WeaponList = []
 
@@ -99,14 +99,25 @@ class Player(pygame.sprite.Sprite):
         elif self.direction_vector.y == -1:
             self.status = 'back'
             self.weapon_status = 'up'
+
         elif self.direction_vector.y == 1:
-            self.status = 'right'
+
+            if self.status =='right'or self.status =='right_idle':
+
+               self.status = 'right'
+            elif self.status=='left'or self.status =='left_idle':
+
+               self.status = 'left'
+
+            else:
+
+               self.status='right'
             self.weapon_status = 'down'
         elif self.direction_vector.x == 1:
-            self.status = 'left'
+            self.status = 'right'
             self.weapon_status = 'right'
         else:
-            self.status = 'right'
+            self.status = 'left'
             self.weapon_status = 'left'
 
         ####武器、魔法待实现
@@ -181,17 +192,13 @@ class Player(pygame.sprite.Sprite):
         predicty = self.rect.y + self.direction_vector.y * self.speed * dt
         # print(self.rect,(predictx,predicty))
         if predictx < 0 or predictx >= GAME_SCREEN_WIDTH - 1:
-
             # print(self.direction_vector.y)
-
             self.rect.x += self.direction_vector.x * self.speed * dt
             self.collision("horizontal")
             self.pos_vector = pygame.math.Vector2(self.rect.center)
 
         elif predicty < 0 or predicty >= GAME_SCREEN_HEIGHT - 1:
-
             # (self.direction_vector.x)
-
             self.rect.y += self.direction_vector.y * self.speed * dt
             self.collision("vertical")
             self.pos_vector = pygame.math.Vector2(self.rect.center)
@@ -203,6 +210,7 @@ class Player(pygame.sprite.Sprite):
             self.pos_vector = pygame.math.Vector2(self.rect.center)
 
     def collision(self, direction):
+
         if direction == "horizontal":
             for sp in self.obstacle:
                 if sp.rect.colliderect(self.rect):
@@ -258,7 +266,7 @@ class Player(pygame.sprite.Sprite):
                 self.attack(tempW, self.enemy_sprite)
 
         elif self.handMagic == "Shoot":
-            print("ok")
+
             if self.MP >= 10:
                 self.MP -= 10
                 magic = Magic(self.magic_sprites)
@@ -274,8 +282,7 @@ class Player(pygame.sprite.Sprite):
     def setPos(self, pos):
         self.rect.center = pos
 
-    def setDisplaySur(self, sur):
-        self.display_surface = sur
+
 
     def import_assets(self):
         self.animations = {'right': [], 'left': [], 'back': [], 'right_idle': [], 'left_idle': [], 'back_idle': []}
@@ -288,7 +295,7 @@ class Player(pygame.sprite.Sprite):
         self.frame_index += 4 * dt
         if self.frame_index >= len(self.animations[self.status]):
             self.frame_index = 0
-        self.image = self.animations[self.status][int(self.frame_index)]
+        self.image = self.animations[self.status][int(self.frame_index)].convert()
         if self.getDMG:
             value = sin(pygame.time.get_ticks())
             if value >= 0:
@@ -303,8 +310,7 @@ class Player(pygame.sprite.Sprite):
     def drinkMedicine(self):
         if self.already_drunk_medicine:
             return
-        print(self.inventory)
-        print('HP: ', self.HP)
+
         if self.inventory['medicine'] > 0:
             self.inventory['medicine'] -= 1
             self.HP = min(self.HP + 50, 100)

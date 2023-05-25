@@ -73,6 +73,8 @@ class myMap:
         self.block.block_sprites.draw(self.screen)
         self.trap.create_trap_tile(room, self.roomyl, self.roomxl)
         self.trap.trap_sprites.draw(self.screen)
+    def SetMoveArea(self, x, y):
+        room = self.toRoom(self.mazeMatrix, y, x)
         for i in range(0, self.RoomRow):
             for j in range(0, self.RoomCol):
                 if room[i][j] == 0:

@@ -8,7 +8,8 @@ from level import Level
 from Interface_component import *
 from sound import *
 from player import Player
-
+from enemy import Enemy
+from boss import  Boss
 
 class InterFace:
     gameover = False

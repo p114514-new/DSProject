@@ -5,18 +5,22 @@ import random
 import A
 from support import import_folder
 import numpy as np
+from Interface_component import *
+from sound import *
 
 
 class Enemy(Player):
-    def __init__(self, pos, playerpos, movepath, group, obstacle_sprite, trap_sprite, mapp):
 
-        super(Enemy, self).__init__(pos, movepath, group, obstacle_sprite, trap_sprite)
+    def __init__(self, pos, playerpos, movepath, group, obstacle_sprite, trap_sprite, mapp,sur):
+
+        super(Enemy, self).__init__(pos, movepath, group, obstacle_sprite, trap_sprite,sur)
+
         # import assets and surface setup
         self.import_assets()
         self.status = 'right'
         self.frame_index = 0
         self.image = self.animations[self.status][self.frame_index]
-
+        self.display_surface=sur
         # general setup
         self.rect = self.image.get_rect(center=pos)
         self.movepath = movepath
@@ -41,6 +45,8 @@ class Enemy(Player):
         self.animate(dt)
         self.invincibility()
         self.chasestep = 0
+
+        self.Enemy_lifebar_draw()
 
     def setPlayerPos(self, playerpos):
         self.playerpos = playerpos
@@ -103,6 +109,16 @@ class Enemy(Player):
         for animation in self.animations.keys():
             full_path = r'./enemy/' + animation
             self.animations[animation] = import_folder(full_path)
+    def Enemy_lifebar_draw(self):
+        left = self.rect.left
+        top = self.rect.top-10
+        width = self.rect.left-self.rect.left
+        height = 10
+        outline_rect = pygame.Rect(left, top, width, height)
+        pygame.draw.rect(self.display_surface, Color.WHITE, outline_rect, 1)
+        life_rect = pygame.Rect(left + 1, top + 1, self.HP / 100.0 * width, height * 0.93)
+        pygame.draw.rect(self.display_surface, Color.RED, life_rect)
+
 
     def chase(self):
         # print( (self.rect.x//self.cellx), self.rect.y//self.celly, self.playerpos.x//self.cellx, self.playerpos.y//self.celly)

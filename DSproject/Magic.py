@@ -9,8 +9,10 @@ class Magic(pygame.sprite.Sprite):
         self.speed = 100
         self.ATK = 100
         self.frame_index = 0
-        self.pics = {'right': r'./weapon/0.png', 'left': r'./weapon/1.png', 'up': r'./weapon/2.png',
-                     'down': r'./weapon/3.png'}
+
+        self.pics = {'right': r'./bullet/0.png', 'left': r'./bullet/1.png', 'up': r'./bullet/2.png',
+                     'down': r'./bullet/3.png'}
+
         self.dir = {'right': [1, 0], 'left': [-1, 0], 'up': [0, -1], 'down': [0, 1]}
         self.step = 50
 
