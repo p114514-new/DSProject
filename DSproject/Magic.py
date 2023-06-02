@@ -14,7 +14,7 @@ class Magic(pygame.sprite.Sprite):
                      'down': r'./bullet/3.png'}
 
         self.dir = {'right': [1, 0], 'left': [-1, 0], 'up': [0, -1], 'down': [0, 1]}
-        self.step = 50
+        self.step = 250
 
     def setMagic(self, status, pos, enemy, oracle):
         self.status = status

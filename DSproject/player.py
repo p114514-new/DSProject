@@ -13,9 +13,9 @@ from math import *
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, pos, movepath, group, obstacle_sprite, trap_sprite,sur):
+    def __init__(self, pos, movepath, group, obstacle_sprite, trap_sprite, sur):
         super().__init__(group)
-        self.display_surface=sur
+        self.display_surface = sur
         self.weapon_sprites = pygame.sprite.Group()
         self.WeaponList = []
 
@@ -69,8 +69,9 @@ class Player(pygame.sprite.Sprite):
         self.last_notice_time = 0
         self.noticing = False
 
-        self.shiftMagic=0
-        self.last_click_time=pygame.time.get_ticks()
+        self.shiftMagic = 0
+        self.last_click_time = pygame.time.get_ticks()
+
     def add_obstacle(self, sprite):
         self.obstacle.add(sprite)
 
@@ -104,16 +105,16 @@ class Player(pygame.sprite.Sprite):
 
         elif self.direction_vector.y == 1:
 
-            if self.status =='right'or self.status =='right_idle':
+            if self.status == 'right' or self.status == 'right_idle':
 
-               self.status = 'right'
-            elif self.status=='left'or self.status =='left_idle':
+                self.status = 'right'
+            elif self.status == 'left' or self.status == 'left_idle':
 
-               self.status = 'left'
+                self.status = 'left'
 
             else:
 
-               self.status='right'
+                self.status = 'right'
             self.weapon_status = 'down'
         elif self.direction_vector.x == 1:
             self.status = 'right'
@@ -138,9 +139,10 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_4]:
 
             if pygame.time.get_ticks() - self.last_click_time > 300:
-               self.shiftMagic=(self.shiftMagic+1)%2
-               self.last_click_time = pygame.time.get_ticks()
-               print(self.shiftMagic)
+                self.shiftMagic = (self.shiftMagic + 1) % 2
+                self.last_click_time = pygame.time.get_ticks()
+                print(self.shiftMagic)
+                self.handMagic = self.MagicList[self.shiftMagic]
         # drink medicine
         if keys[pygame.K_3]:
             self.drinkMedicine()
@@ -167,8 +169,6 @@ class Player(pygame.sprite.Sprite):
         if pygame.time.get_ticks() - self.last_hit_time > 100:
             self.invincible = False
             self.getDMG = False
-
-
 
     def update(self, dt):
         self.input()
@@ -261,7 +261,6 @@ class Player(pygame.sprite.Sprite):
 
     # 利用碰撞检测实现attack
     def doMagic(self):
-        self.handMagic=self.MagicList[self.shiftMagic]
         if self.handMagic == "Circle":
             if self.MP >= 1:
                 self.MP -= 1
@@ -291,8 +290,6 @@ class Player(pygame.sprite.Sprite):
 
     def setPos(self, pos):
         self.rect.center = pos
-
-
 
     def import_assets(self):
         self.animations = {'right': [], 'left': [], 'back': [], 'right_idle': [], 'left_idle': [], 'back_idle': []}

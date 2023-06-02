@@ -9,7 +9,8 @@ from Interface_component import *
 from sound import *
 from player import Player
 from enemy import Enemy
-from boss import  Boss
+from boss import Boss
+
 
 class InterFace:
     gameover = False
@@ -149,8 +150,9 @@ class InterFace:
                 button_setting = ButtonColorSurface(Color.TRANSPARENT, 26, 26)
                 button_setting.draw(self.screen, SCREEN_WIDTH * 0.09, SCREEN_HEIGHT * 0.048)
 
-                #display number of medicines
-                self.screen.blit(pygame.image.load(r'.\medicine\134.png'), (SCREEN_WIDTH * 0.72, SCREEN_HEIGHT * 0.9))
+                # display number of medicines
+                self.screen.blit(pygame.image.load(r'.\medicine\134.png').convert_alpha(),
+                                 (SCREEN_WIDTH * 0.72, SCREEN_HEIGHT * 0.9))
 
                 num_surface = pygame.Surface((16, 16))
                 num_surface.fill((0, 0, 0))
@@ -159,8 +161,9 @@ class InterFace:
                 num_surface.blit(text, (0, 0))
                 self.screen.blit(num_surface, (SCREEN_WIDTH * 0.75, SCREEN_HEIGHT * 0.9))
 
-                #display number of keys
-                self.screen.blit(pygame.image.load(r'.\key\145.png'), (SCREEN_WIDTH * 0.78, SCREEN_HEIGHT * 0.9))
+                # display number of keys
+                self.screen.blit(pygame.image.load(r'.\key\145.png').convert_alpha(),
+                                 (SCREEN_WIDTH * 0.78, SCREEN_HEIGHT * 0.9))
 
                 num_surface = pygame.Surface((16, 16))
                 num_surface.fill((0, 0, 0))
@@ -168,6 +171,56 @@ class InterFace:
                 text = font.render(str(self.level.player.inventory['keys']), True, (255, 255, 255))
                 num_surface.blit(text, (0, 0))
                 self.screen.blit(num_surface, (SCREEN_WIDTH * 0.81, SCREEN_HEIGHT * 0.9))
+
+                self.screen.blit(
+                    pygame.transform.scale(pygame.image.load(r'.\keyboard buttons\1.png').convert_alpha(), (28, 28)),
+                    (SCREEN_WIDTH * 0.45, SCREEN_HEIGHT * 0.95))
+                self.screen.blit(
+                    pygame.transform.scale(pygame.image.load(r'.\keyboard buttons\2.png').convert_alpha(), (28, 28)),
+                    (SCREEN_WIDTH * 0.53, SCREEN_HEIGHT * 0.95))
+                self.screen.blit(
+                    pygame.transform.scale(pygame.image.load(r'.\keyboard buttons\3.png').convert_alpha(), (28, 28)),
+                    (SCREEN_WIDTH * 0.635, SCREEN_HEIGHT * 0.95))
+                self.screen.blit(
+                    pygame.transform.scale(pygame.image.load(r'.\keyboard buttons\4.png').convert_alpha(), (28, 28)),
+                    (SCREEN_WIDTH * 0.76, SCREEN_HEIGHT * 0.95))
+
+                str1_surface = pygame.Surface((32, 25))
+                str1_surface.fill((0, 0, 0))
+                font = pygame.font.SysFont(None, 18)
+                text = font.render('slash', True, (255, 255, 255))
+                str1_surface.blit(text, (0, 0))
+                self.screen.blit(str1_surface, (SCREEN_WIDTH * 0.485, SCREEN_HEIGHT * 0.96))
+
+                str2_surface = pygame.Surface((60, 25))
+                str2_surface.fill((0, 0, 0))
+                font = pygame.font.SysFont(None, 18)
+                text = font.render('use magic', True, (255, 255, 255))
+                str2_surface.blit(text, (0, 0))
+                self.screen.blit(str2_surface, (SCREEN_WIDTH * 0.565, SCREEN_HEIGHT * 0.96))
+
+                str3_surface = pygame.Surface((80, 25))
+                str3_surface.fill((0, 0, 0))
+                font = pygame.font.SysFont(None, 18)
+                text = font.render('use medicine', True, (255, 255, 255))
+                str3_surface.blit(text, (0, 0))
+                self.screen.blit(str3_surface, (SCREEN_WIDTH * 0.67, SCREEN_HEIGHT * 0.96))
+
+                str4_surface = pygame.Surface((85, 25))
+                str4_surface.fill((0, 0, 0))
+                font = pygame.font.SysFont(None, 18)
+                text = font.render('switch magic', True, (255, 255, 255))
+                str4_surface.blit(text, (0, 0))
+                self.screen.blit(str4_surface, (SCREEN_WIDTH * 0.795, SCREEN_HEIGHT * 0.96))
+
+                shoot_magic = pygame.transform.scale(pygame.image.load(r'.\bullet\0.png').convert_alpha(), (32, 32))
+                shoot_magic.set_alpha(255 if self.level.player.handMagic == 'Shoot' else 100)
+                self.screen.blit(shoot_magic, (SCREEN_WIDTH * 0.88, SCREEN_HEIGHT * 0.9))
+
+                circle_magic = pygame.transform.scale(pygame.image.load(r'.\weapon\Blade\5.jpg').convert_alpha(),
+                                                      (32, 32))
+                circle_magic.set_alpha(255 if self.level.player.handMagic == 'Circle' else 100)
+                self.screen.blit(circle_magic, (SCREEN_WIDTH * 0.93, SCREEN_HEIGHT * 0.9))
 
                 button_game_over = ButtonText('', Color.BLACK, 'aajht.ttf', 50)  # 开始游戏按钮
                 self.lifebar_draw()
@@ -355,8 +408,6 @@ class InterFace:
                     self.level.__init__()
                     print(self.level.player.HP)
                     button_OK.handle_event(self.start_interface)
-
-
 
             pygame.display.update()
 
