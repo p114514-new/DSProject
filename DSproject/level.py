@@ -11,7 +11,9 @@ from medicine import Medicine
 from key import Key
 from gate import Gate
 
+
 n = 30  # number of enemies
+
 
 m = 5  # number of medicine
 
@@ -185,9 +187,11 @@ class Level:
                 self.player.rect.y = GAME_SCREEN_HEIGHT
 
     def setup(self):
+
         self.map.SetMoveArea(self.curRoom[0], self.curRoom[1])
 
         for i in [self.map.gate1, self.map.gate2, self.map.gate3]:
+
             roomNO = [i[1] // 4, i[0] // 4]
             pos = [(i[1] % 4 + 1) * self.map.roomxl, (i[0] % 4 + 1) * self.map.roomyl]
             globals()['self.gate' + str(i)] = Gate(roomNO, pos, self.map.roomxl, self.map.roomyl)
@@ -210,6 +214,7 @@ class Level:
                              self.map.getTrap(),self.display_surface)
 
 
+
         for i in range(0, n):
             roomNO = [random.randint(0, self.RR - 1), random.randint(0, self.RC - 1)]
             pos = self.map.getRoomBirthPos(roomNO)
@@ -223,6 +228,7 @@ class Level:
         globals()['self.boss' + str(i)] = Boss(bosspos, self.player.getpos(), movepath,
                                                  self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
                                                  self.map,self.display_surface)
+
         globals()['self.boss' + str(i)].roomNO = bossroomNO
 
         for i in range(0, m):

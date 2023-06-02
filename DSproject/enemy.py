@@ -8,10 +8,13 @@ import numpy as np
 from Interface_component import *
 from sound import *
 
+
 class Enemy(Player):
+
     def __init__(self, pos, playerpos, movepath, group, obstacle_sprite, trap_sprite, mapp,sur):
 
         super(Enemy, self).__init__(pos, movepath, group, obstacle_sprite, trap_sprite,sur)
+
         # import assets and surface setup
         self.import_assets()
         self.status = 'right'
