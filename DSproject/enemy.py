@@ -41,12 +41,11 @@ class Enemy(Player):
         self.chasestep = 0
 
     def update(self, dt):
+        self.Enemy_lifebar_draw()
         self.Move(dt)
         self.animate(dt)
         self.invincibility()
         self.chasestep = 0
-
-        self.Enemy_lifebar_draw()
 
     def setPlayerPos(self, playerpos):
         self.playerpos = playerpos
@@ -112,12 +111,14 @@ class Enemy(Player):
     def Enemy_lifebar_draw(self):
         left = self.rect.left
         top = self.rect.top-10
-        width = self.rect.left-self.rect.left
+        width = self.rect.right-self.rect.left
+
         height = 10
         outline_rect = pygame.Rect(left, top, width, height)
         pygame.draw.rect(self.display_surface, Color.WHITE, outline_rect, 1)
         life_rect = pygame.Rect(left + 1, top + 1, self.HP / 100.0 * width, height * 0.93)
         pygame.draw.rect(self.display_surface, Color.RED, life_rect)
+
 
 
     def chase(self):
