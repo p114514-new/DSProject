@@ -139,6 +139,7 @@ class InterFace:
             else:
                 dt = self.clock.tick() / 1000
                 # print(hit1_sound.get_volume())
+
                 self.level.run(dt)
                 Image('返回.png', ratio=0.38).draw(self.screen, SCREEN_WIDTH * 0.04, SCREEN_HEIGHT * 0.047)
                 button_back = ButtonColorSurface(Color.TRANSPARENT, 26, 26)
@@ -351,7 +352,12 @@ class InterFace:
                     sys.exit()
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.level.__init__()
+                    print(self.level.player.HP)
                     button_OK.handle_event(self.start_interface)
+
+
+
             pygame.display.update()
 
     def mutefunc(self):

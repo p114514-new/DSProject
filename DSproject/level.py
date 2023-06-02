@@ -117,7 +117,7 @@ class Level:
         self.player.setEnemy(self.enemy_sprites)
         #####kill enemy#####
         for sp in self.enemy_sprites:
-            if sp.HP < 0:
+            if sp.HP <= 0:
                 sp.kill()
 
         for medicine_sprite in self.medicine_sprites:

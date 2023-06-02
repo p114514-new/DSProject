@@ -69,6 +69,8 @@ class Player(pygame.sprite.Sprite):
         self.last_notice_time = 0
         self.noticing = False
 
+        self.shiftMagic=0
+        self.last_click_time=pygame.time.get_ticks()
     def add_obstacle(self, sprite):
         self.obstacle.add(sprite)
 
@@ -133,7 +135,12 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_2]:
             self.doMagic()
+        if keys[pygame.K_4]:
 
+            if pygame.time.get_ticks() - self.last_click_time > 300:
+               self.shiftMagic=(self.shiftMagic+1)%2
+               self.last_click_time = pygame.time.get_ticks()
+               print(self.shiftMagic)
         # drink medicine
         if keys[pygame.K_3]:
             self.drinkMedicine()
@@ -160,6 +167,8 @@ class Player(pygame.sprite.Sprite):
         if pygame.time.get_ticks() - self.last_hit_time > 100:
             self.invincible = False
             self.getDMG = False
+
+
 
     def update(self, dt):
         self.input()
@@ -252,6 +261,7 @@ class Player(pygame.sprite.Sprite):
 
     # 利用碰撞检测实现attack
     def doMagic(self):
+        self.handMagic=self.MagicList[self.shiftMagic]
         if self.handMagic == "Circle":
             if self.MP >= 1:
                 self.MP -= 1
