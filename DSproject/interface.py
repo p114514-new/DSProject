@@ -77,8 +77,8 @@ class InterFace:
         # 设置<开始界面>文字和贴图
         #        Image('ink.png', ratio=0.4).draw(screen, width * 0.52, height * 0.67)  # 墨印
 
-        button_game_start = ButtonText('开始游戏', Color.BLACK, 'aajht.ttf', 50)  # 开始游戏按钮
-        button_game_option = ButtonText('选  项', Color.BLACK, 'aajht.ttf', 50)
+        button_game_start = ButtonText('Start Game', Color.BLACK, 'aajht.ttf', 50)  # 开始游戏按钮
+        button_game_option = ButtonText('Option', Color.BLACK, 'aajht.ttf', 50)
         ButtonColorSurface.number = 1
 
         while True:
@@ -87,11 +87,11 @@ class InterFace:
             Image('bg3.jpg', 0.6).draw(screen, width / 2, height / 2)
             Image('achievement_icon.png', ratio=0.3).draw(screen, width * 0.93, height * 0.05)  # 成就按钮
 
-            Text('地牢使者', Color.BLACK, 'aajht.ttf', 90).draw(screen, width / 2, height * 0.36)  # 游戏名
+            Text('Tomb Raider', Color.BLACK, 'aajht.ttf', 90).draw(screen, width / 2, height * 0.36)  # 游戏名
             Text('Alpha 0.0', Color.VERSION, 'aajht.ttf', 12).draw(screen, width / 2, height * 0.97)  # 版本号
-            Text('成就', Color.ACHIEVEMENT, 'aajht.ttf', 16).draw(screen, width * 0.93, height * 0.10)  # 成就
+            Text('Achievement', Color.ACHIEVEMENT, 'aajht.ttf', 16).draw(screen, width * 0.93, height * 0.10)  # 成就
 
-            button_game_start = ButtonText('开始游戏', Color.BLACK, 'aajht.ttf', 50)  # 开始游戏按钮
+            button_game_start = ButtonText('Start Game', Color.BLACK, 'aajht.ttf', 50)  # 开始游戏按钮
 
             button_game_start.draw(screen, width / 2, height * 0.55)
             button_game_option.draw(screen, width / 2, height * 0.65)
@@ -137,9 +137,11 @@ class InterFace:
 
             if self.level.player.HP <= 0:
                 self.game_over_interface()
+                # print(hit1_sound.get_volume())
+            elif self.level.boss.HP <= 0:
+                self.game_win_interface()
             else:
                 dt = self.clock.tick() / 1000
-                # print(hit1_sound.get_volume())
 
                 self.level.run(dt)
                 Image('返回.png', ratio=0.38).draw(self.screen, SCREEN_WIDTH * 0.04, SCREEN_HEIGHT * 0.047)
@@ -273,18 +275,19 @@ class InterFace:
 
         self.button_back.draw(self.screen, SCREEN_WIDTH * 0.04, SCREEN_HEIGHT * 0.047)
 
-        Text('全屏', Color.ACHIEVEMENT, 'xxyl.ttf', 38).draw(screen, width / 5, height * 0.30)
-        Text('静音', Color.ACHIEVEMENT, 'xxyl.ttf', 38).draw(self.screen, SCREEN_WIDTH / 5, SCREEN_HEIGHT * 0.20)
+        Text('Fullscreen', Color.ACHIEVEMENT, 'xxyl.ttf', 38).draw(screen, width / 5, height * 0.30)
+        Text('Mute', Color.ACHIEVEMENT, 'xxyl.ttf', 38).draw(self.screen, SCREEN_WIDTH / 5, SCREEN_HEIGHT * 0.20)
 
-        Text('音量大小', Color.ACHIEVEMENT, 'xxyl.ttf', 32).draw(screen, width / 5, height * 0.40)
-        Text('音效大小', Color.ACHIEVEMENT, 'xxyl.ttf', 32).draw(screen, width / 5, height * 0.50)
-        Text('制作人名单', Color.ACHIEVEMENT, 'xxyl.ttf', 40).draw(screen, width * 0.73, height * 0.20)
-        Text('A', Color.ACHIEVEMENT, 'xxyl.ttf', 30).draw(screen, width * 0.73, height * 0.30)
-        Text('B', Color.ACHIEVEMENT, 'xxyl.ttf', 30).draw(screen, width * 0.73, height * 0.38)
-        Text('C', Color.ACHIEVEMENT, 'xxyl.ttf', 30).draw(screen, width * 0.73, height * 0.46)
-        Text('D', Color.ACHIEVEMENT, 'xxyl.ttf', 30).draw(screen, width * 0.73, height * 0.54)
-        Text('E', Color.ACHIEVEMENT, 'xxyl.ttf', 30).draw(screen, width * 0.73, height * 0.62)
-
+        Text('Music Volume', Color.ACHIEVEMENT, 'xxyl.ttf', 32).draw(screen, width / 5, height * 0.40)
+        Text('Sound Volume', Color.ACHIEVEMENT, 'xxyl.ttf', 32).draw(screen, width / 5, height * 0.50)
+        Text('Authors', Color.ACHIEVEMENT, 'xxyl.ttf', 40).draw(screen, width * 0.73, height * 0.20)
+        Text('Yang Shen', Color.ACHIEVEMENT, 'xxyl.ttf', 30).draw(screen, width * 0.73, height * 0.30)
+        Text('Ye Xiaoming', Color.ACHIEVEMENT, 'xxyl.ttf', 30).draw(screen, width * 0.73, height * 0.38)
+        Text('Yao Jiongsen', Color.ACHIEVEMENT, 'xxyl.ttf', 30).draw(screen, width * 0.73, height * 0.46)
+        Text('Shen Wenxuan', Color.ACHIEVEMENT, 'xxyl.ttf', 30).draw(screen, width * 0.73, height * 0.54)
+        Text('Liu Yanting', Color.ACHIEVEMENT, 'xxyl.ttf', 30).draw(screen, width * 0.73, height * 0.62)
+        Text('Chambers: '+str(self.level.RR)+"X"+str(self.level.RC), Color.ACHIEVEMENT, 'xxyl.ttf', 30).draw(screen, width * 0.73, height * 0.70)
+        Text('Pos: '+str(self.level.curRoom[1])+","+str(self.level.curRoom[0]), Color.ACHIEVEMENT, 'xxyl.ttf', 30).draw(screen, width * 0.73, height * 0.78)
     def option_interface(self):
         pygame.mixer.music.set_volume(self.bg_volume)
         volume_state = 0
@@ -292,7 +295,7 @@ class InterFace:
         pygame.display.set_caption("Dungeon Tour")
         size, screen = self.option_background()
         width, height = size
-        Text('静音', Color.ACHIEVEMENT, 'xxyl.ttf', 38).draw(screen, width / 5, height * 0.20)
+        Text('Muse', Color.ACHIEVEMENT, 'xxyl.ttf', 38).draw(screen, width / 5, height * 0.20)
         self.mute_judge()
 
         # 绘制水平直线，参数依次为(surface, color, start_pos, end_pos, width)
@@ -387,6 +390,46 @@ class InterFace:
 
             Image('bg4.jpg', 0.2).draw(self.screen, width / 2, height / 2)
             button_died = ButtonText('You have died!', Color.light_grey, 'aajht.ttf', 40)  # 开始游戏按钮
+            button_OK = ButtonText('Restart', Color.light_grey, 'aajht.ttf', 50)  # 开始游戏按钮
+            button_died.draw(self.screen, width / 2, height * 0.4)
+            button_OK.draw(self.screen, width / 2, height * 0.55)
+
+            OK_hover = button_OK.rect.collidepoint(pygame.mouse.get_pos())
+
+            if OK_hover:
+                hover_image.draw(self.screen, width / 2, height * 0.55)
+
+            outline_rect = pygame.Rect(340, 360, 220, 50)
+            pygame.draw.rect(self.screen, Color.light_grey, outline_rect, 1)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.level.__init__()
+                    print(self.level.player.HP)
+                    button_OK.handle_event(self.start_interface)
+
+            pygame.display.update()
+
+    def game_win_interface(self):
+        Player.HP = 100
+        Player.MP = 100
+        hover_image = Image('ink.png', ratio=0.35)
+        hover_image.set_alpha(100)
+        while True:
+            game_icon = pygame.image.load(os.path.join('image', 'game_logo.png'))
+            game_caption = 'Dungeon Tour'
+            pygame.display.set_icon(game_icon)
+            pygame.display.set_caption(game_caption)
+
+            # 设置开始界面
+            width, height = SCREEN_WIDTH, SCREEN_HEIGHT
+
+            Image('bg4.jpg', 0.2).draw(self.screen, width / 2, height / 2)
+            button_died = ButtonText('You Win!', Color.light_grey, 'aajht.ttf', 40)  # 开始游戏按钮
             button_OK = ButtonText('Restart', Color.light_grey, 'aajht.ttf', 50)  # 开始游戏按钮
             button_died.draw(self.screen, width / 2, height * 0.4)
             button_OK.draw(self.screen, width / 2, height * 0.55)

@@ -10,6 +10,7 @@ from mapeditor import myMap
 from medicine import Medicine
 from key import Key
 from gate import Gate
+import sons_of_enemy
 
 
 n = 30  # number of enemies
@@ -218,18 +219,45 @@ class Level:
         for i in range(0, n):
             roomNO = [random.randint(0, self.RR - 1), random.randint(0, self.RC - 1)]
             pos = self.map.getRoomBirthPos(roomNO)
-            globals()['self.enemy' + str(i)] = Enemy(pos, self.player.getpos(), movepath,
-                                                     self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
-                                                     self.map,self.display_surface)
-            globals()['self.enemy' + str(i)].roomNO = roomNO
+            x=random.randint(0,5)
+            if x==0:
+                globals()['self.enemy' + str(i)] = Enemy(pos, self.player.getpos(), movepath,
+                                                                   self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
+                                                                   self.map, self.display_surface)
+                globals()['self.enemy' + str(i)].roomNO = roomNO
+            if x==1:
+                globals()['self.enemy' + str(i)] = sons_of_enemy.Slime(pos, self.player.getpos(), movepath,
+                                                                   self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
+                                                                   self.map, self.display_surface)
+                globals()['self.enemy' + str(i)].roomNO = roomNO
+            if x==2:
+                globals()['self.enemy' + str(i)] = sons_of_enemy.Ghost(pos, self.player.getpos(), movepath,
+                                                                   self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
+                                                                   self.map, self.display_surface)
+                globals()['self.enemy' + str(i)].roomNO = roomNO
+            if x==3:
+                globals()['self.enemy' + str(i)] = sons_of_enemy.Goblin(pos, self.player.getpos(), movepath,
+                                                                   self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
+                                                                   self.map, self.display_surface)
+                globals()['self.enemy' + str(i)].roomNO = roomNO
+            if x==4:
+                globals()['self.enemy' + str(i)] = sons_of_enemy.Bat(pos, self.player.getpos(), movepath,
+                                                                   self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
+                                                                   self.map, self.display_surface)
+                globals()['self.enemy' + str(i)].roomNO = roomNO
+            if x==5:
+                globals()['self.enemy' + str(i)] = sons_of_enemy.Magician(pos, self.player.getpos(), movepath,
+                                                                   self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
+                                                                   self.map, self.display_surface)
+                globals()['self.enemy' + str(i)].roomNO = roomNO
 
         bossroomNO = [self.map.monster[1] // 4, self.map.monster[0] // 4]
         bosspos = [(self.map.monster[1] % 4 + 1.5) * self.map.roomxl, (self.map.monster[0] % 4 + 1.5) * self.map.roomyl]
-        globals()['self.boss' + str(i)] = Boss(bosspos, self.player.getpos(), movepath,
+        self.boss = Boss(bosspos, self.player.getpos(), movepath,
                                                  self.enemy_sprites, self.map.getBlock(), self.map.getTrap(),
                                                  self.map,self.display_surface)
 
-        globals()['self.boss' + str(i)].roomNO = bossroomNO
+        self.boss.roomNO = bossroomNO
 
         for i in range(0, m):
             roomNO = [random.randint(0, self.RR - 1), random.randint(0, self.RC - 1)]

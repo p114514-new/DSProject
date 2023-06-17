@@ -66,7 +66,7 @@ class Enemy(Player):
             if self.chasedis <= 0:
                 self.chasestep += 1
                 self.chasedis = self.map.roomxl * 1.1
-        if (self.pos_vector - self.playerpos).magnitude() <= 50:
+        if (self.pos_vector - self.playerpos).magnitude() <= 150:
             self.direction_vector = -(self.pos_vector - self.playerpos)
             self.move(dt)
         else:

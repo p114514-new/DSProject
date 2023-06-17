@@ -243,20 +243,20 @@ class PrimMaze:
                     key[i - 1].append([kx, ky])
             if len(key[i - 1]) == 0:
                 key[i - 1].append(path[dd[i - 1 + 1]])
-
-        if door[0] == key[0][-1]:
+        if d2-1>d1+1 and d3-1>d2+1 and l-3>d3+1:
+         if door[0] == key[0][-1]:
             door[0] = predoor[random.randint(d1 + 1, d2 - 1)]
-        else:
+         else:
             door[0] = predoor[random.randint(d1, d2 - 1)]
 
-        if door[1] == key[1][-1]:
+         if door[1] == key[1][-1]:
             door[1] = predoor[random.randint(d2 + 1, d3 - 1)]
-        else:
+         else:
             door[1] = predoor[random.randint(d2, d3 - 1)]
 
-        if door[2] == key[2][-1]:
+         if door[2] == key[2][-1]:
             door[2] = predoor[random.randint(d3 + 1, l - 3)]
-        else:
+         else:
             door[2] = predoor[random.randint(d3, l - 3)]
 
         m = predoor.index(door[2])
